@@ -1,6 +1,8 @@
 from .json import OneM2MJsonSerializer
 from openmtc_onem2m.exc import CSEBadRequest, CSEContentsUnacceptable
-from werkzeug import Accept, parse_accept_header
+#from werkzeug import Accept, parse_accept_header
+from werkzeug.http import parse_accept_header
+from werkzeug.datastructures import Accept
 from futile.logging import get_logger
 from openmtc.exc import OpenMTCError
 
