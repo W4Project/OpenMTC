@@ -382,7 +382,7 @@ get_requirements_from_setup_file ()
     local module_name=${setup_file%.py}
 
     cd ${working_dir}
-    python - << END_OF_PYTHON
+    python3 - << END_OF_PYTHON
 from importlib import import_module
 from re import sub
 setup = import_module('${module_name}', '${module_name}')

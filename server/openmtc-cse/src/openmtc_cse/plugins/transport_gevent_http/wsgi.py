@@ -7,8 +7,10 @@ from socket import AF_INET, AF_INET6, getaddrinfo, SOCK_STREAM, inet_pton
 
 from funcy import pluck
 from gevent.pywsgi import WSGIHandler, WSGIServer
-from werkzeug.wrappers import (BaseRequest, CommonRequestDescriptorsMixin,
-                               UserAgentMixin, AcceptMixin, Response)
+#from werkzeug.wrappers import (BaseRequest, CommonRequestDescriptorsMixin,
+#                               UserAgentMixin, AcceptMixin, Response)
+from werkzeug.wrappers import Request as rq
+from werkzeug.wrappers import Response
 
 from futile.collections import get_iterable
 from futile.logging import LoggerMixin
@@ -50,8 +52,9 @@ def is_ipv6(address):
     return True
 
 
-class Request(BaseRequest, CommonRequestDescriptorsMixin, UserAgentMixin,
-              AcceptMixin):
+#class Request(BaseRequest, CommonRequestDescriptorsMixin, UserAgentMixin,
+#              AcceptMixin):
+class Request(rq):
     pass
 
 
