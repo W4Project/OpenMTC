@@ -9,7 +9,8 @@ from funcy import pluck
 from gevent.pywsgi import WSGIHandler, WSGIServer
 #from werkzeug.wrappers import (BaseRequest, CommonRequestDescriptorsMixin,
 #                               UserAgentMixin, AcceptMixin, Response)
-from werkzeug.wrappers import (Request, Response)
+from werkzeug.wrappers import Request as rq
+from werkzeug.wrappers import Response
 
 from futile.collections import get_iterable
 from futile.logging import LoggerMixin
@@ -53,7 +54,7 @@ def is_ipv6(address):
 
 #class Request(BaseRequest, CommonRequestDescriptorsMixin, UserAgentMixin,
 #              AcceptMixin):
-class Request():
+class Request(rq):
     pass
 
 
