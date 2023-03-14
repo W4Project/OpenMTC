@@ -17,7 +17,7 @@ class TestIPE(XAE):
         'Sol_Temp',
         'Env_Temp',
         'Humi',
-        'Soil_pH'
+        'pH'
     ]
 
     # available actuators
@@ -116,7 +116,7 @@ class TestIPE(XAE):
 
 
             # generate random sensor data
-            if sensor.startswith('Soil_pH'):
+            if sensor.startswith('pH'):
                 value = int(random() * value_range + value_offset)/10
             else:
                 value = int(random() * value_range + value_offset)
@@ -152,7 +152,7 @@ class TestIPE(XAE):
         elif sensor.startswith('Humi'):
             labels.append('humidity')
         else:
-            labels.append('soil pH value')
+            labels.append('pH value')
 
         measurements_container = Container(resourceName='measurements')
         measurements_container = self.create_container(device_container.path,
@@ -187,7 +187,7 @@ class TestIPE(XAE):
         else:
             data = {
                 'value': value,
-                'type': 'soil pH value',
+                'type': 'pH value',
                 'unit': ''
             }
 
