@@ -10,20 +10,18 @@
 #
 #######################################################################
 
-from email.mime import base
-from signal import pause
 import paho.mqtt.client as mqtt
 import json
 import pymongo
 import ssl
 import base64
 
-MQTT_USERNAME = "mongoDB"
-MQTT_PASSWORD = "mongoDBcare1"
-HOST = '29c49bdf585f4e6d8e93e1522dc5e23f.s1.eu.hivemq.cloud'
+MQTT_USERNAME = "<change-mqtt-username>"
+MQTT_PASSWORD = "<change-mqtt-password>"
+HOST = 'change-mqtt-host'
 PORT = 8883
 
-MONGO_URI = 'mongodb+srv://onem2mCARE1:onem2mCARE1diliman@onem2m.up2wghs.mongodb.net/?retryWrites=true&w=majority'
+MONGO_URI = 'change-mongodb-uri'
 
 prev_rqi = ''
 
@@ -37,6 +35,7 @@ def on_message(client, userdata, message):
 
     global prev_rqi
 
+    # In OpenMTC,
     # topic = onem2m/MQTT_<system:SmartFarm/AQM>/<sensor>
     topic = payload['to'].split('/')
     
