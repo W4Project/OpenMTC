@@ -16,40 +16,55 @@ import pymongo
 import ssl
 import base64
 
-MQTT_USERNAME = "<change-mqtt-username>"
-MQTT_PASSWORD = "<change-mqtt-password>"
-HOST = 'change-mqtt-host'
+MQTT_USERNAME = "<insert-mqtt-username>"
+MQTT_PASSWORD = "<insert-mqtt-password>"
+HOST = '<insert-mqtt-host>'
 PORT = 8883
 
-MONGO_URI = 'change-mongodb-uri'
+MONGO_URI = '<insert-mongodb-uri>'
 
-prev_rqi = ''
+# for OpenMTC only
+# prev_rqi = ''
 
 def on_connect(client, userdata, flags, rc):
+    # 0 for successful connection
     print('CONNACK received with code %d.' % (rc))
 
+    # '#' means wildcard
+    # and this mean subscribing to all topics
     client.subscribe('#', qos=1)
 
 def on_message(client, userdata, message):
     payload = json.loads(message.payload)
 
+    '''
+    # for OpenMTC
     global prev_rqi
 
     # In OpenMTC,
     # topic = onem2m/MQTT_<system:SmartFarm/AQM>/<sensor>
     topic = payload['to'].split('/')
+    '''
     
-    if topic[1] != None:
-        if topic[1] == "MQTT_SmartFarm":
-            db = smartfarm_db
-            db_name = "oneM2M_MQTT_SmartFarm"
-        elif topic[1] == "MQTT_AQM":
-            db = aqm_db
-            db_name = "oneM2M_MQTT_AQM"
-
+    topic = message.topic
+    
+    if topic[1] != None:                        # remove topic index
+        if topic[1] == "MQTT_SmartFarm":        # remove topic index
+            db = smartfarm_db                   
+            db_name = "oneM2M_MQTT_SmartFarm"   # change name of db into non-onem2m
+        elif topic[1] == "MQTT_AQM":            # remove topic index
+            db = aqm_db         
+            db_name = "oneM2M_MQTT_AQM"         # change name of db into non-onem2m
+    
+    '''
+    # for OpenMTC
     rqi = payload['rqi']
+    '''
+    
 
     try:
+        '''
+        # for OpenMTC
         pc = payload['pc']
         cin = pc['m2m:cin']
         con = cin['con']
@@ -57,18 +72,21 @@ def on_message(client, userdata, message):
         decodedBytes = base64.b64decode(con)
         decodedStr = decodedBytes.decode("utf-8")
         con_str = json.loads(decodedStr)
+        '''
 
-        if topic[2] != None and topic[2] not in db.list_collection_names():
-            pymongo.collection.Collection(db, topic[2], create=True)
-            print("Created collection with name:", topic[2], "in database", db_name,  "\n")
+        if topic[2] != None and topic[2] not in db.list_collection_names():                     # change into: if topic not in db.list_collection_names():
+            pymongo.collection.Collection(db, topic[2], create=True)                            # remove topic index
+            print("Created collection with name:", topic[2], "in database", db_name,  "\n")     # remove topic index
         
-        if rqi != prev_rqi:
-            col = pymongo.collection.Collection(db, topic[2], create=False)
-            col.insert_one(con_str)
-            print("Inserted ", con_str, " to Collection", topic[2], "in database", db_name, "\n")
-            prev_rqi = rqi
+        if rqi != prev_rqi:                                                                     # for OpenMTC only, remove
+            col = pymongo.collection.Collection(db, topic[2], create=False)                     # remove topic index
+            col.insert_one(con_str)                                                             # change con_str into payload
+            print("Inserted ", con_str, " to Collection", topic[2], "in database", db_name, "\n")   # change con_str into payload, remove topic index
+            prev_rqi = rqi                                                                      # for OpenMTC only, remove
     except:
         pass
+        
+     
 
 
 
@@ -83,8 +101,8 @@ client.connect(HOST, PORT)
 # Setup MongoDB connection
 mongo_client = pymongo.MongoClient(MONGO_URI)
 
-smartfarm_db = mongo_client.oneM2M_MQTT_SmartFarm
-aqm_db = mongo_client.oneM2M_MQTT_AQM
+smartfarm_db = mongo_client.oneM2M_MQTT_SmartFarm       # change into non-onem2m
+aqm_db = mongo_client.oneM2M_MQTT_AQM                   # change into non-onem2m
 
 # Start to listen to the HiveMQ Broker
 client.loop_forever()
