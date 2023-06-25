@@ -224,8 +224,8 @@ fi
 
 # check if default python version is 3.x
 python_version_getter="import sys; print('%s%s' % (sys.version_info.major, sys.version_info.minor))"
-if [ $($(which python3) -c "${python_version_getter}") != "38" ]; then
-    echo "Default python version should be 3.8. Exiting now."
+if [ $($(which python3) -c "${python_version_getter}") != "310" ] && [ $($(which python3) -c "${python_version_getter}") != "38" ]; then
+    echo "Default python version should be 3.8 or 3.10. Exiting now."
     exit 2
 fi
 
