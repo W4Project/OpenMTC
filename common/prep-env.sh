@@ -6,6 +6,6 @@ for d in ../futile/src ../common/openmtc/lib ../common/*/src ../serializers/*/sr
     PYTHONPATH=${PYTHONPATH}:$(pwd)/${_READLINK_PATH:-${_SRC_PATH}}
 done
 
-echo PYTHONPATH: ${PYTHONPATH}
+#echo PYTHONPATH: ${PYTHONPATH}
 
 export PYTHONPATH
