@@ -18,12 +18,12 @@ import base64
 
 from datetime import datetime
 
-MQTT_USERNAME = "mongoDB"
-MQTT_PASSWORD = "mongoDBcare1"
-MQTT_HOST = '29c49bdf585f4e6d8e93e1522dc5e23f.s1.eu.hivemq.cloud'
+MQTT_USERNAME = "<insert-user>"
+MQTT_PASSWORD = "<insert-password>"
+MQTT_HOST = '<insert-host>'
 MQTT_PORT = 8883
 
-MONGO_URI = 'mongodb+srv://onem2mCARE1:onem2mCARE1diliman@onem2m.up2wghs.mongodb.net/?retryWrites=true&w=majority'
+MONGO_URI = '<insert-mongodb-uri>'
 
 prev_rqi = ''
 
